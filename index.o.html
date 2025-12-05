@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IT Resource Center</title>
+
+  <!-- your main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#b71c1c">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Minimal chat CSS to ensure Mira displays correctly even if style.css isn't updated yet -->
+  <style>
+    /* Chat button + window (keeps consistent with your brand) */
+    .chat-btn {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      background: var(--brand, #b71c1c);
+      color: #fff;
+      border: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      font-size: 22px;
+      box-shadow: 0 8px 28px rgba(183,28,28,0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .chat-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(183,28,28,0.7); }
+
+    /* Container for embedded Mira chat */
+    #mira-chat {
+      position: fixed;
+      right: 26px;
+      bottom: 100px;
+      width: 420px;
+      height: 600px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      overflow: hidden;
+      display: none; /* toggled by aria-hidden */
+      flex-direction: column;
+      z-index: 210;
+      border: 2px solid var(--brand, #b71c1c);
+    }
+    #mira-chat[aria-hidden="false"] { display: flex; animation: fadeInUp .28s ease; }
+
+    /* header (outside iframe) */
+    #mira-chat .mira-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 12px;
+      background: linear-gradient(90deg, var(--brand, #b71c1c), #8b1a1a);
+      color:#fff;
+      font-weight:700;
+    }
+    #mira-chat .mira-header .title { font-size:15px; }
+    #mira-chat .mira-header button.close { background:transparent; border:0; color:#fff; font-size:18px; cursor:pointer; }
+
+    #mira-chat iframe { width: 100%; height: calc(100% - 44px); border: none; display:block; }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(8px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      #mira-chat { width: 360px; height: 64vh; right:16px; bottom: 90px; }
+    }
+    @media (max-width: 520px) {
+      #mira-chat { left: 10px; right: 10px; width: auto; height: 72vh; bottom: 84px; }
+      .chat-btn { right: 16px; bottom: 16px; width:56px; height:56px; font-size:20px; }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <!-- ---------- HEADER / NAV ---------- -->
+  <header class="nav">
+    <div class="nav-left">
+      <button id="hamburger" class="icon-btn menu" title="Open menu">☰</button>
+      <div class="brand">
+        <img src="https://www.thenewnorth.com/wp-content/uploads/2020/09/Michels-Logo_January_-2020-4x2-1.png"
+             alt="Michels Logo" class="brand-logo" />
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#8a8a8a" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Search resources..." aria-label="Search resources" />
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="notif-wrap">
+        <button class="icon-btn bell" id="notifBtn" title="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M15 17H9a3 3 0 006 0zM18 8a6 6 0 10-12 0v5l-2 2h16l-2-2V8z" stroke="#222" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="notif">2</span>
+        </button>
+        <div id="notifDropdown" class="notif-dropdown" aria-hidden="true">
+          <div class="notif-header">
+            <strong>Notifications</strong>
+            <button id="clearNotifs" class="link-btn">Clear</button>
+          </div>
+          <ul id="notifList">
+            <li class="notif-item"><strong>Safety Training</strong><span class="notif-time">Jan 10</span><p>All staff required safety session on Jan 15.</p></li>
+            <li class="notif-item"><strong>Equipment Maintenance</strong><span class="notif-time">Jan 08</span><p>Scheduled maintenance on Jan 25 — plan accordingly.</p></li>
+          </ul>
+          <div class="notif-footer">
+            <a href="projects.html" class="small-link">View all updates</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-dropdown-wrap" id="profileWrap">
+        <button class="icon-btn profile" id="profileBtn" title="Profile">
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+               alt="Profile"
+               style="width:30px;height:30px;border:0.5px solid #ffffff;background:#ffffff;padding:4px;">
+        </button>
+
+        <div id="profileDropdown" class="profile-dropdown" aria-hidden="true">
+          <div class="profile-preview" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #eee;background:#fafafa;">
+            <img src="profile-icon.png" alt="profile" style="width:40px;height:40px;border-radius:50%;">
+            <div class="profile-info" style="display:flex;flex-direction:column;">
+              <strong style="font-size:14px;">Aliandra</strong>
+              <small style="font-size:12px;color:#666;"></small>
+            </div>
+          </div>
+          <a href="#">Edit Profile</a>
+          <a href="mytasks.html" id="myTaskLink">My Tasks</a>
+          <a href="#">Settings & Privacy</a>
+          <a href="#" id="changeLanguage">My Favorites</a>
+          <a href="#" id="logout">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ---------- SIDEBAR ---------- -->
+  <aside id="sidebar" class="sidebar" aria-hidden="true">
+    <div class="side-top">
+      <h3>IT Resource Center</h3>
+      <button id="closeSidebar" class="close-side" title="Close">✕</button>
+    </div>
+    <nav class="side-nav">
+      <a href="index.html" class="side-link">Home</a>
+      <a href="about.html" class="side-link">About Michels</a>
+      <a href="projects.html" class="side-link">Projects</a>
+      <a href="careers.html" class="side-link">Careers</a>
+      <a href="contact.html" class="side-link">Contact</a>
+      <hr/>
+      <a href="guides.html" class="side-link">Guides</a>
+      <a href="training.html" class="side-link">Training</a>
+      <a href="policies.html" class="side-link">Policies & Forms</a>
+      <a href="feedback.html" class="side-link">Feedback</a>
+      <a href="tools.html" class="side-link">Tools & Equipment</a>
+      <a href="directory.html" class="side-link">Team Directory</a>
+    </nav>
+    <div class="side-foot">© 2025 Michels</div>
+  </aside>
+
+  <!-- ---------- HERO ---------- -->
+  <section class="hero">
+    <div class="hero-image" aria-hidden></div>
+    <div class="hero-overlay">
+      <h1 class="hero-title">IT Resource Center</h1>
+      <p class="hero-desc">Your one-stop hub for company resources, documents, and important announcements</p>
+    </div>
+  </section>
+
+  <!-- ---------- ANNOUNCEMENTS ---------- -->
+  <section class="announcements-section">
+    <div class="announcements-left">
+      <h2 class="section-title">Announcements & Events</h2>
+      <p class="section-sub">Stay updated with the latest company news and upcoming events</p>
+      <div class="events-grid" id="eventsGrid">
+        <article class="event-card priority">
+          <div class="event-meta">
+            <h4>Safety Training - All Staff Required <span class="priority-badge">Priority</span></h4>
+            <p class="event-desc">Mandatory safety training session for all construction personnel. Topics include fall protection and equipment handling.</p>
+            <div class="event-info"><span>📅 January 15, 2025</span><span>⏰ 9:00 AM</span></div>
+          </div>
+        </article>
+
+        <article class="event-card">
+          <div class="event-meta">
+            <h4>Project Kickoff Meeting - Downtown Plaza</h4>
+            <p class="event-desc">Initial planning meeting for the new downtown plaza construction project.</p>
+            <div class="event-info"><span>📅 January 20, 2025</span><span>⏰ 2:00 PM</span></div>
+          </div>
+        </article>
+
+        <article class="event-card">
+          <div class="event-meta">
+            <h4>Equipment Maintenance Day</h4>
+            <p class="event-desc">Scheduled maintenance for all heavy machinery. Alternative equipment will be available.</p>
+            <div class="event-info"><span>📅 January 25, 2025</span><span>⏰ All Day</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- QUICK ACCESS ---------- -->
+  <section class="quick-access">
+    <h2 class="section-title">Quick Access Resources</h2>
+    <p class="section-sub">Everything you need, right at your fingertips</p>
+
+    <div class="cta-row">
+      <button id="openTicketBtn" class="cta primary"><svg viewBox="0 0 24 24" class="btn-icon"><path d="M3 7h18M12 3v18" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>Submit a Ticket</button>
+      <button class="cta" id="viewPendingBtn">View Pending Tickets</button>
+      <button class="cta" id="viewHistoryBtn">Ticket History</button>
+    </div>
+
+    <div class="resources-grid" id="resourcesGrid">
+      <a class="resource-card" href="guides.html">
+        <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M6 8h12v8H6z" stroke="#b71c1c" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div>
+        <h4>Guides</h4>
+        <p>Step-by-step guides and best practices documentation</p>
+      </a>
+
+      <a class="resource-card" href="training.html">
+        <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z" stroke="#b71c1c" stroke-width="1.6" fill="none"/></svg></div>
+        <h4>Training Materials</h4>
+        <p>Safety courses, certifications, and learning resources</p>
+      </a>
+
+      <a class="resource-card" href="feedback.html">
+        <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="#b71c1c" stroke-width="1.6" fill="none"/></svg></div>
+        <h4>Feedback</h4>
+        <p>Share your thoughts and suggestions for improvement</p>
+      </a>
+
+      <a class="resource-card" href="policies.html">
+        <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M7 8h10v8H7z" stroke="#b71c1c" stroke-width="1.6" fill="none"/></svg></div>
+        <h4>Policies & Forms</h4>
+        <p>Access company policies, procedures, and required forms</p>
+      </a>
+
+      <a class="resource-card" href="safety.html">
+        <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 3l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z" stroke="#b71c1c" stroke-width="1.4" fill="none"/></svg></div>
+        <h4>Safety Resources</h4>
+        <p>Safety protocols, incident reporting, and guidelines</p>
+      </a>
+
+      <a class="resource-card" href="directory.html">
+        <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 110 8 4 4 0 010-8zM3 20c0-3 4-5 9-5s9 2 9 5" stroke="#b71c1c" stroke-width="1.4" fill="none"/></svg></div>
+        <h4>Team Directory</h4>
+        <p>Contact information and organizational structure</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ---------- CHAT (Mira) ---------- -->
+<!-- Floating chat button (opens Mira) -->
+<button id="openMira" class="chat-btn" aria-label="Open Mira — Michels IT Agent">💬</button>
+
+<!-- Embedded Mira chat container -->
+<div id="mira-chat" aria-hidden="true" role="dialog" aria-label="Mira — Michels IT Agent">
+  <div class="mira-header">
+    <span class="title">Mira — Michels IT Agent</span>
+    <button class="close" id="closeMira" aria-label="Close Mira">×</button>
+  </div>
+
+  <!-- Copilot Studio webchat embed -->
+  <iframe id="mira-iframe"
+    src="https://copilotstudio.microsoft.com/environments/Default-88227c99-d157-4dbe-8e33-d8b3fcc29577/bots/cr69f_itResourceCopilot/webchat?__version__=2&hideHeader=true&hideBotName=true&bgColor=ffffff"
+
+    title="Mira — Michels IT Agent"
+    allow="microphone; clipboard-read; clipboard-write; autoplay; encrypted-media">
+  </iframe>
+</div>
+
+
+  <!-- ---------- FOOTER ---------- -->
+  <footer class="footer"><p>© 2025 Michels. All rights reserved.</p></footer>
+
+  <!-- ---------- SCRIPTS ---------- -->
+  <script src="script.js"></script> <!-- your existing site scripts -->
+
+  <script>
+    // Ensure DOM ready before accessing elements
+    document.addEventListener('DOMContentLoaded', () => {
+      // Profile dropdown logic (preserved)
+      const profileBtn = document.getElementById("profileBtn");
+      const profileDropdown = document.getElementById("profileDropdown");
+      if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isHidden = profileDropdown.getAttribute("aria-hidden") === "true";
+          profileDropdown.setAttribute("aria-hidden", isHidden ? "false" : "true");
+        });
+        document.addEventListener("click", (e) => {
+          if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.setAttribute("aria-hidden", "true");
+          }
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") profileDropdown.setAttribute("aria-hidden", "true");
+        });
+      }
+
+      const logout = document.getElementById("logout");
+      if (logout) {
+        logout.addEventListener("click", (e) => {
+          e.preventDefault();
+          alert("Logging out (demo).");
+          profileDropdown && profileDropdown.setAttribute("aria-hidden", "true");
+        });
+      }
+
+      // Notifications dropdown
+      const notifBtn = document.getElementById('notifBtn');
+      const notifDropdown = document.getElementById('notifDropdown');
+      if (notifBtn && notifDropdown) {
+        notifBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const hidden = notifDropdown.getAttribute('aria-hidden') === 'true';
+          notifDropdown.setAttribute('aria-hidden', hidden ? 'false' : 'true');
+        });
+        document.addEventListener('click', (e) => {
+          if (!notifBtn.contains(e.target) && !notifDropdown.contains(e.target)) {
+            notifDropdown.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+
+      // Sidebar open/close (preserved)
+      const hamburger = document.getElementById('hamburger');
+      const sidebar = document.getElementById('sidebar');
+      const closeSidebar = document.getElementById('closeSidebar');
+      if (hamburger && sidebar) {
+        hamburger.addEventListener('click', () => sidebar.setAttribute('aria-hidden', 'false'));
+        closeSidebar.addEventListener('click', () => sidebar.setAttribute('aria-hidden', 'true'));
+      }
+
+      // Mira chat toggle logic
+      const openBtn = document.getElementById('openMira');
+      const chatBox = document.getElementById('mira-chat');
+      const closeBtn = document.getElementById('closeMira');
+      const iframe = document.getElementById('mira-iframe');
+
+      function openMira() {
+        chatBox.setAttribute('aria-hidden', 'false');
+        openBtn.style.display = 'none';
+        // optional: focus iframe
+        try { iframe && iframe.focus(); } catch(e) {}
+      }
+
+      function closeMira() {
+        chatBox.setAttribute('aria-hidden', 'true');
+        openBtn.style.display = 'flex';
+      }
+
+      if (openBtn && chatBox) openBtn.addEventListener('click', openMira);
+      if (closeBtn) closeBtn.addEventListener('click', closeMira);
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatBox.getAttribute('aria-hidden') === 'false') {
+          closeMira();
+        }
+      });
+
+      // Ensure clicks outside chat close it (optional)
+      document.addEventListener('click', (e) => {
+        if (chatBox.getAttribute('aria-hidden') === 'false') {
+          const isInside = chatBox.contains(e.target) || openBtn.contains(e.target);
+          if (!isInside) {
+            // do nothing — we keep it open unless user presses close
+          }
+        }
+      });
+
+      console.log('Page and Mira chat initialized.');
+    });
+  </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("search");
+
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+
+      // 🔍 Basic keyword matching
+      if (query.includes("resource") || query.includes("quick access")) {
+        // Scroll to Quick Access section
+        const quickAccess = document.querySelector(".quick-access");
+        if (quickAccess) {
+          quickAccess.scrollIntoView({ behavior: "smooth" });
+        }
+      } 
+      else if (query.includes("guide")) {
+        window.location.href = "guides.html";
+      }
+      else if (query.includes("training")) {
+        window.location.href = "training.html";
+      }
+      else if (query.includes("policy") || query.includes("form")) {
+        window.location.href = "policies.html";
+      }
+      else if (query.includes("safety")) {
+        window.location.href = "safety.html";
+      }
+      else if (query.includes("directory") || query.includes("team")) {
+        window.location.href = "directory.html";
+      }
+      else if (query.includes("feedback")) {
+        window.location.href = "feedback.html";
+      }
+      else {
+        alert("No results found. Try 'guides', 'policies', or 'resources'.");
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

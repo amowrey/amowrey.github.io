@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IT Resource Center</title>
+  <title data-i18n="pageTitle">IT Resource Center</title>
 
-  <!-- your main stylesheet -->
+  <!-- your main stylesheet (kept) -->
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#b71c1c">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet"/>
@@ -72,7 +72,36 @@
       to   { transform: translateY(0); opacity: 1; }
     }
 
-    /* Responsive adjustments */
+    /* Language select inside profile dropdown */
+  /* Profile Dropdown - Language Row Styling */
+.lang-row {
+  display: flex;
+  justify-content: center;      /* centers everything horizontally */
+  align-items: center;          /* aligns dropdown + label vertically */
+  gap: 12px;                    /* space between label + dropdown */
+  padding: 14px 0;
+  font-family: "Montserrat", sans-serif;
+  border-top: 1px solid #e5e5e5;
+}
+
+.lang-row label {
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+}
+
+#languageSelect {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+
+    /* Keep existing responsive adjustments from original */
     @media (max-width: 900px) {
       #mira-chat { width: 360px; height: 64vh; right:16px; bottom: 90px; }
     }
@@ -84,7 +113,6 @@
 </head>
 
 <body>
-  
   <!-- ---------- HEADER / NAV ---------- -->
   <header class="nav">
     <div class="nav-left">
@@ -98,7 +126,8 @@
     <div class="nav-center">
       <div class="search-wrap">
         <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#8a8a8a" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
-        <input id="search" type="search" placeholder="Search resources..." aria-label="Search resources" />
+        <!-- mark placeholder for translation -->
+        <input id="search" type="search" data-i18n="navSearch" placeholder="Search resources..." aria-label="Search resources" />
       </div>
     </div>
 
@@ -110,15 +139,23 @@
         </button>
         <div id="notifDropdown" class="notif-dropdown" aria-hidden="true">
           <div class="notif-header">
-            <strong>Notifications</strong>
-            <button id="clearNotifs" class="link-btn">Clear</button>
+            <strong data-i18n="notifHeader">Notifications</strong>
+            <button id="clearNotifs" class="link-btn" data-i18n="notifClear">Clear</button>
           </div>
           <ul id="notifList">
-            <li class="notif-item"><strong>Safety Training</strong><span class="notif-time">Jan 10</span><p>All staff required safety session on Jan 15.</p></li>
-            <li class="notif-item"><strong>Equipment Maintenance</strong><span class="notif-time">Jan 08</span><p>Scheduled maintenance on Jan 25 — plan accordingly.</p></li>
+            <li class="notif-item">
+              <strong data-i18n="notif_item1_title">Safety Training</strong>
+              <span class="notif-time" data-i18n="notif_item1_time">Jan 10</span>
+              <p data-i18n="notif_item1_desc">All staff required safety session on Jan 15.</p>
+            </li>
+            <li class="notif-item">
+              <strong data-i18n="notif_item2_title">Equipment Maintenance</strong>
+              <span class="notif-time" data-i18n="notif_item2_time">Jan 08</span>
+              <p data-i18n="notif_item2_desc">Scheduled maintenance on Jan 25 — plan accordingly.</p>
+            </li>
           </ul>
           <div class="notif-footer">
-            <a href="projects.html" class="small-link">View all updates</a>
+            <a href="projects.html" class="small-link" data-i18n="notifViewAll">View all updates</a>
           </div>
         </div>
       </div>
@@ -138,11 +175,22 @@
               <small style="font-size:12px;color:#666;"></small>
             </div>
           </div>
-          <a href="#">Edit Profile</a>
-          <a href="mytasks.html" id="myTaskLink">My Tasks</a>
-          <a href="#">Settings & Privacy</a>
-          <a href="#" id="changeLanguage">My Favorites</a>
-          <a href="#" id="logout">Logout</a>
+          <a href="#" data-i18n="profileEdit">Edit Profile</a>
+          <a href="mytasks.html" id="myTaskLink" data-i18n="profileTasks">My Tasks</a>
+          <a href="#" data-i18n="profileSettings">Settings & Privacy</a>
+          <a href="#" id="changeLanguage" data-i18n="profileFav">My Favorites</a>
+
+          <!-- LANGUAGE SELECTOR (inside profile dropdown) -->
+          <div class="lang-row" aria-hidden="false">
+            <label for="languageSelect" data-i18n="langLabel">Language</label>
+            <select id="languageSelect" aria-label="Language selector">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </div>
+
+          <a href="#" id="logout" data-i18n="profileLogout">Logout</a>
         </div>
       </div>
     </div>
@@ -151,62 +199,62 @@
   <!-- ---------- SIDEBAR ---------- -->
   <aside id="sidebar" class="sidebar" aria-hidden="true">
     <div class="side-top">
-      <h3>IT Resource Center</h3>
+      <h3 data-i18n="sidebarTitle">IT Resource Center</h3>
       <button id="closeSidebar" class="close-side" title="Close">✕</button>
     </div>
     <nav class="side-nav">
-      <a href="index.html" class="side-link">Home</a>
-      <a href="about.html" class="side-link">About Michels</a>
-      <a href="projects.html" class="side-link">Projects</a>
-      <a href="careers.html" class="side-link">Careers</a>
-      <a href="contact.html" class="side-link">Contact</a>
+      <a href="index.html" class="side-link" data-i18n="sidebarHome">Home</a>
+      <a href="about.html" class="side-link" data-i18n="sidebarAbout">About Michels</a>
+      <a href="projects.html" class="side-link" data-i18n="sidebarProjects">Projects</a>
+      <a href="careers.html" class="side-link" data-i18n="sidebarCareers">Careers</a>
+      <a href="contact.html" class="side-link" data-i18n="sidebarContact">Contact</a>
       <hr/>
-      <a href="guides.html" class="side-link">Guides</a>
-      <a href="training.html" class="side-link">Training</a>
-      <a href="policies.html" class="side-link">Policies & Forms</a>
-      <a href="feedback.html" class="side-link">Feedback</a>
-      <a href="tools.html" class="side-link">Tools & Equipment</a>
-      <a href="directory.html" class="side-link">Team Directory</a>
+      <a href="guides.html" class="side-link" data-i18n="sidebarGuides">Guides</a>
+      <a href="training.html" class="side-link" data-i18n="sidebarTraining">Training</a>
+      <a href="policies.html" class="side-link" data-i18n="sidebarPolicies">Policies & Forms</a>
+      <a href="feedback.html" class="side-link" data-i18n="sidebarFeedback">Feedback</a>
+      <a href="tools.html" class="side-link" data-i18n="sidebarTools">Tools & Equipment</a>
+      <a href="directory.html" class="side-link" data-i18n="sidebarDirectory">Team Directory</a>
     </nav>
-    <div class="side-foot">© 2025 Michels</div>
+    <div class="side-foot" data-i18n="sidebarFooter">© 2025 Michels</div>
   </aside>
 
   <!-- ---------- HERO ---------- -->
   <section class="hero">
     <div class="hero-image" aria-hidden></div>
     <div class="hero-overlay">
-      <h1 class="hero-title">IT Resource Center</h1>
-      <p class="hero-desc">Your one-stop hub for company resources, documents, and important announcements</p>
+      <h1 class="hero-title" data-i18n="heroTitle">IT Resource Center</h1>
+      <p class="hero-desc" data-i18n="heroDesc">Your one-stop hub for company resources, documents, and important announcements</p>
     </div>
   </section>
 
   <!-- ---------- ANNOUNCEMENTS ---------- -->
   <section class="announcements-section">
     <div class="announcements-left">
-      <h2 class="section-title">Announcements & Events</h2>
-      <p class="section-sub">Stay updated with the latest company news and upcoming events</p>
+      <h2 class="section-title" data-i18n="announceTitle">Announcements & Events</h2>
+      <p class="section-sub" data-i18n="announceSub">Stay updated with the latest company news and upcoming events</p>
       <div class="events-grid" id="eventsGrid">
         <article class="event-card priority">
           <div class="event-meta">
-            <h4>Safety Training - All Staff Required <span class="priority-badge">Priority</span></h4>
-            <p class="event-desc">Mandatory safety training session for all construction personnel. Topics include fall protection and equipment handling.</p>
-            <div class="event-info"><span>📅 January 15, 2025</span><span>⏰ 9:00 AM</span></div>
+            <h4 data-i18n="event1_title">Safety Training - All Staff Required <span class="priority-badge" data-i18n="priorityBadge">Priority</span></h4>
+            <p class="event-desc" data-i18n="event1_desc">Mandatory safety training session for all construction personnel. Topics include fall protection and equipment handling.</p>
+            <div class="event-info"><span data-i18n="event1_date">📅 January 15, 2025</span><span data-i18n="event1_time">⏰ 9:00 AM</span></div>
           </div>
         </article>
 
         <article class="event-card">
           <div class="event-meta">
-            <h4>Project Kickoff Meeting - Downtown Plaza</h4>
-            <p class="event-desc">Initial planning meeting for the new downtown plaza construction project.</p>
-            <div class="event-info"><span>📅 January 20, 2025</span><span>⏰ 2:00 PM</span></div>
+            <h4 data-i18n="event2_title">Project Kickoff Meeting - Downtown Plaza</h4>
+            <p class="event-desc" data-i18n="event2_desc">Initial planning meeting for the new downtown plaza construction project.</p>
+            <div class="event-info"><span data-i18n="event2_date">📅 January 20, 2025</span><span data-i18n="event2_time">⏰ 2:00 PM</span></div>
           </div>
         </article>
 
         <article class="event-card">
           <div class="event-meta">
-            <h4>Equipment Maintenance Day</h4>
-            <p class="event-desc">Scheduled maintenance for all heavy machinery. Alternative equipment will be available.</p>
-            <div class="event-info"><span>📅 January 25, 2025</span><span>⏰ All Day</span></div>
+            <h4 data-i18n="event3_title">Equipment Maintenance Day</h4>
+            <p class="event-desc" data-i18n="event3_desc">Scheduled maintenance for all heavy machinery. Alternative equipment will be available.</p>
+            <div class="event-info"><span data-i18n="event3_date">📅 January 25, 2025</span><span data-i18n="event3_time">⏰ All Day</span></div>
           </div>
         </article>
       </div>
@@ -215,83 +263,81 @@
 
   <!-- ---------- QUICK ACCESS ---------- -->
   <section class="quick-access">
-    <h2 class="section-title">Quick Access Resources</h2>
-    <p class="section-sub">Everything you need, right at your fingertips</p>
+    <h2 class="section-title" data-i18n="quickTitle">Quick Access Resources</h2>
+    <p class="section-sub" data-i18n="quickSub">Everything you need, right at your fingertips</p>
 
     <div class="cta-row">
-      <button id="openTicketBtn" class="cta primary"><svg viewBox="0 0 24 24" class="btn-icon"><path d="M3 7h18M12 3v18" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>Submit a Ticket</button>
-      <button class="cta" id="viewPendingBtn">View Pending Tickets</button>
-      <button class="cta" id="viewHistoryBtn">Ticket History</button>
+      <button id="openTicketBtn" class="cta primary" data-i18n="submitTicket"><svg viewBox="0 0 24 24" class="btn-icon"><path d="M3 7h18M12 3v18" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>Submit a Ticket</button>
+      <button class="cta" id="viewPendingBtn" data-i18n="viewPending">View Pending Tickets</button>
+      <button class="cta" id="viewHistoryBtn" data-i18n="history">Ticket History</button>
     </div>
 
     <div class="resources-grid" id="resourcesGrid">
       <a class="resource-card" href="guides.html">
         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M6 8h12v8H6z" stroke="#b71c1c" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></div>
-        <h4>Guides</h4>
-        <p>Step-by-step guides and best practices documentation</p>
+        <h4 data-i18n="res_guides_title">Guides</h4>
+        <p data-i18n="res_guides_desc">Step-by-step guides and best practices documentation</p>
       </a>
 
       <a class="resource-card" href="training.html">
         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z" stroke="#b71c1c" stroke-width="1.6" fill="none"/></svg></div>
-        <h4>Training Materials</h4>
-        <p>Safety courses, certifications, and learning resources</p>
+        <h4 data-i18n="res_training_title">Training Materials</h4>
+        <p data-i18n="res_training_desc">Safety courses, certifications, and learning resources</p>
       </a>
 
       <a class="resource-card" href="feedback.html">
         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="#b71c1c" stroke-width="1.6" fill="none"/></svg></div>
-        <h4>Feedback</h4>
-        <p>Share your thoughts and suggestions for improvement</p>
+        <h4 data-i18n="res_feedback_title">Feedback</h4>
+        <p data-i18n="res_feedback_desc">Share your thoughts and suggestions for improvement</p>
       </a>
 
       <a class="resource-card" href="policies.html">
         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M7 8h10v8H7z" stroke="#b71c1c" stroke-width="1.6" fill="none"/></svg></div>
-        <h4>Policies & Forms</h4>
-        <p>Access company policies, procedures, and required forms</p>
+        <h4 data-i18n="res_policies_title">Policies & Forms</h4>
+        <p data-i18n="res_policies_desc">Access company policies, procedures, and required forms</p>
       </a>
 
       <a class="resource-card" href="safety.html">
         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 3l2 4 4 1-3 3 1 4-4-2-4 2 1-4-3-3 4-1z" stroke="#b71c1c" stroke-width="1.4" fill="none"/></svg></div>
-        <h4>Safety Resources</h4>
-        <p>Safety protocols, incident reporting, and guidelines</p>
+        <h4 data-i18n="res_safety_title">Safety Resources</h4>
+        <p data-i18n="res_safety_desc">Safety protocols, incident reporting, and guidelines</p>
       </a>
 
       <a class="resource-card" href="directory.html">
         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 4a4 4 0 110 8 4 4 0 010-8zM3 20c0-3 4-5 9-5s9 2 9 5" stroke="#b71c1c" stroke-width="1.4" fill="none"/></svg></div>
-        <h4>Team Directory</h4>
-        <p>Contact information and organizational structure</p>
+        <h4 data-i18n="res_directory_title">Team Directory</h4>
+        <p data-i18n="res_directory_desc">Contact information and organizational structure</p>
       </a>
     </div>
   </section>
 
   <!-- ---------- CHAT (Mira) ---------- -->
-<!-- Floating chat button (opens Mira) -->
-<button id="openMira" class="chat-btn" aria-label="Open Mira — Michels IT Agent">💬</button>
+  <!-- Floating chat button (opens Mira) -->
+  <button id="openMira" class="chat-btn" aria-label="Open Mira — Michels IT Agent" data-i18n-attr-label="miraOpenLabel">💬</button>
 
-<!-- Embedded Mira chat container -->
-<div id="mira-chat" aria-hidden="true" role="dialog" aria-label="Mira — Michels IT Agent">
-  <div class="mira-header">
-    <span class="title">Mira — Michels IT Agent</span>
-    <button class="close" id="closeMira" aria-label="Close Mira">×</button>
+  <!-- Embedded Mira chat container -->
+  <div id="mira-chat" aria-hidden="true" role="dialog" aria-label="Mira — Michels IT Agent">
+    <div class="mira-header">
+      <span class="title" data-i18n="miraTitle">Mira — Michels IT Agent</span>
+      <button class="close" id="closeMira" aria-label="Close Mira">×</button>
+    </div>
+
+    <!-- Copilot Studio webchat embed -->
+    <iframe id="mira-iframe"
+      src="https://copilotstudio.microsoft.com/environments/Default-88227c99-d157-4dbe-8e33-d8b3fcc29577/bots/cr69f_itResourceCopilot/webchat?__version__=2&hideHeader=true&hideBotName=true&bgColor=ffffff"
+      title="Mira — Michels IT Agent"
+      allow="microphone; clipboard-read; clipboard-write; autoplay; encrypted-media">
+    </iframe>
   </div>
 
-  <!-- Copilot Studio webchat embed -->
-  <iframe id="mira-iframe"
-    src="https://copilotstudio.microsoft.com/environments/Default-88227c99-d157-4dbe-8e33-d8b3fcc29577/bots/cr69f_itResourceCopilot/webchat?__version__=2&hideHeader=true&hideBotName=true&bgColor=ffffff"
-
-    title="Mira — Michels IT Agent"
-    allow="microphone; clipboard-read; clipboard-write; autoplay; encrypted-media">
-  </iframe>
-</div>
-
-
   <!-- ---------- FOOTER ---------- -->
-  <footer class="footer"><p>© 2025 Michels. All rights reserved.</p></footer>
+  <footer class="footer"><p data-i18n="footer">© 2025 Michels. All rights reserved.</p></footer>
 
   <!-- ---------- SCRIPTS ---------- -->
   <script src="script.js"></script> <!-- your existing site scripts -->
 
   <script>
-    // Ensure DOM ready before accessing elements
+    // preserve original init code (profile dropdown, notifs, sidebar, Mira, search)
     document.addEventListener('DOMContentLoaded', () => {
       // Profile dropdown logic (preserved)
       const profileBtn = document.getElementById("profileBtn");
@@ -387,48 +433,357 @@
       console.log('Page and Mira chat initialized.');
     });
   </script>
+
   <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.getElementById("search");
+    // search input logic (preserved)
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("search");
 
-  searchInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const query = searchInput.value.trim().toLowerCase();
+      searchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const query = searchInput.value.trim().toLowerCase();
 
-      // 🔍 Basic keyword matching
-      if (query.includes("resource") || query.includes("quick access")) {
-        // Scroll to Quick Access section
-        const quickAccess = document.querySelector(".quick-access");
-        if (quickAccess) {
-          quickAccess.scrollIntoView({ behavior: "smooth" });
+          // 🔍 Basic keyword matching
+          if (query.includes("resource") || query.includes("quick access")) {
+            // Scroll to Quick Access section
+            const quickAccess = document.querySelector(".quick-access");
+            if (quickAccess) {
+              quickAccess.scrollIntoView({ behavior: "smooth" });
+            }
+          } 
+          else if (query.includes("guide")) {
+            window.location.href = "guides.html";
+          }
+          else if (query.includes("training")) {
+            window.location.href = "training.html";
+          }
+          else if (query.includes("policy") || query.includes("form")) {
+            window.location.href = "policies.html";
+          }
+          else if (query.includes("safety")) {
+            window.location.href = "safety.html";
+          }
+          else if (query.includes("directory") || query.includes("team")) {
+            window.location.href = "directory.html";
+          }
+          else if (query.includes("feedback")) {
+            window.location.href = "feedback.html";
+          }
+          else {
+            alert("No results found. Try 'guides', 'policies', or 'resources'.");
+          }
         }
-      } 
-      else if (query.includes("guide")) {
-        window.location.href = "guides.html";
+      });
+    });
+  </script>
+
+  <!-- ---------- TRANSLATION SCRIPT: EN / ES / DE (applies to all data-i18n elements) ---------- -->
+  <script>
+    (function () {
+      const languageSelect = document.getElementById('languageSelect');
+
+      const translations = {
+        en: {
+          pageTitle: "IT Resource Center",
+          navSearch: "Search resources...",
+          notifHeader: "Notifications",
+          notifClear: "Clear",
+          notifViewAll: "View all updates",
+          notif_item1_title: "Safety Training",
+          notif_item1_desc: "All staff required safety session on Jan 15.",
+          notif_item1_time: "Jan 10",
+          notif_item2_title: "Equipment Maintenance",
+          notif_item2_desc: "Scheduled maintenance on Jan 25 — plan accordingly.",
+          notif_item2_time: "Jan 08",
+
+          profileEdit: "Edit Profile",
+          profileTasks: "My Tasks",
+          profileSettings: "Settings & Privacy",
+          profileFav: "My Favorites",
+          profileLogout: "Logout",
+          langLabel: "Language",
+
+          sidebarTitle: "IT Resource Center",
+          sidebarHome: "Home",
+          sidebarAbout: "About Michels",
+          sidebarProjects: "Projects",
+          sidebarCareers: "Careers",
+          sidebarContact: "Contact",
+          sidebarGuides: "Guides",
+          sidebarTraining: "Training",
+          sidebarPolicies: "Policies & Forms",
+          sidebarFeedback: "Feedback",
+          sidebarTools: "Tools & Equipment",
+          sidebarDirectory: "Team Directory",
+          sidebarFooter: "© 2025 Michels",
+
+          heroTitle: "IT Resource Center",
+          heroDesc: "Your one-stop hub for company resources, documents, and important announcements",
+
+          announceTitle: "Announcements & Events",
+          announceSub: "Stay updated with the latest company news and upcoming events",
+
+          event1_title: "Safety Training - All Staff Required",
+          priorityBadge: "Priority",
+          event1_desc: "Mandatory safety training session for all construction personnel. Topics include fall protection and equipment handling.",
+          event1_date: "📅 January 15, 2025",
+          event1_time: "⏰ 9:00 AM",
+
+          event2_title: "Project Kickoff Meeting - Downtown Plaza",
+          event2_desc: "Initial planning meeting for the new downtown plaza construction project.",
+          event2_date: "📅 January 20, 2025",
+          event2_time: "⏰ 2:00 PM",
+
+          event3_title: "Equipment Maintenance Day",
+          event3_desc: "Scheduled maintenance for all heavy machinery. Alternative equipment will be available.",
+          event3_date: "📅 January 25, 2025",
+          event3_time: "⏰ All Day",
+
+          quickTitle: "Quick Access Resources",
+          quickSub: "Everything you need, right at your fingertips",
+          submitTicket: "Submit a Ticket",
+          viewPending: "View Pending Tickets",
+          history: "Ticket History",
+
+          res_guides_title: "Guides",
+          res_guides_desc: "Step-by-step guides and best practices documentation",
+          res_training_title: "Training Materials",
+          res_training_desc: "Safety courses, certifications, and learning resources",
+          res_feedback_title: "Feedback",
+          res_feedback_desc: "Share your thoughts and suggestions for improvement",
+          res_policies_title: "Policies & Forms",
+          res_policies_desc: "Access company policies, procedures, and required forms",
+          res_safety_title: "Safety Resources",
+          res_safety_desc: "Safety protocols, incident reporting, and guidelines",
+          res_directory_title: "Team Directory",
+          res_directory_desc: "Contact information and organizational structure",
+
+          miraTitle: "Mira — Michels IT Agent",
+          miraOpenLabel: "Open Mira — Michels IT Agent",
+
+          footer: "© 2025 Michels. All rights reserved."
+        },
+
+        es: {
+          pageTitle: "Centro de Recursos de TI",
+          navSearch: "Buscar recursos...",
+          notifHeader: "Notificaciones",
+          notifClear: "Limpiar",
+          notifViewAll: "Ver todas las actualizaciones",
+          notif_item1_title: "Capacitación de Seguridad",
+          notif_item1_desc: "Sesión obligatoria de seguridad para todo el personal el 15 de enero.",
+          notif_item1_time: "10 de ene",
+          notif_item2_title: "Mantenimiento de Equipos",
+          notif_item2_desc: "Mantenimiento programado el 25 de enero. Planifique en consecuencia.",
+          notif_item2_time: "8 de ene",
+
+          profileEdit: "Editar Perfil",
+          profileTasks: "Mis Tareas",
+          profileSettings: "Configuración y Privacidad",
+          profileFav: "Mis Favoritos",
+          profileLogout: "Cerrar Sesión",
+          langLabel: "Idioma",
+
+          sidebarTitle: "Centro de Recursos de TI",
+          sidebarHome: "Inicio",
+          sidebarAbout: "Sobre Michels",
+          sidebarProjects: "Proyectos",
+          sidebarCareers: "Carreras",
+          sidebarContact: "Contacto",
+          sidebarGuides: "Guías",
+          sidebarTraining: "Capacitación",
+          sidebarPolicies: "Políticas y Formularios",
+          sidebarFeedback: "Retroalimentación",
+          sidebarTools: "Herramientas y Equipos",
+          sidebarDirectory: "Directorio del Equipo",
+          sidebarFooter: "© 2025 Michels",
+
+          heroTitle: "Centro de Recursos de TI",
+          heroDesc: "Su centro único para recursos de la empresa, documentos y anuncios importantes",
+
+          announceTitle: "Anuncios y Eventos",
+          announceSub: "Manténgase actualizado con las últimas noticias y próximos eventos",
+
+          event1_title: "Capacitación de Seguridad - Obligatoria para Todo el Personal",
+          priorityBadge: "Prioridad",
+          event1_desc: "Sesión obligatoria de capacitación en seguridad para todo el personal de construcción. Los temas incluyen protección contra caídas y manejo de equipos.",
+          event1_date: "📅 15 de enero de 2025",
+          event1_time: "⏰ 9:00 AM",
+
+          event2_title: "Reunión de Inicio de Proyecto - Plaza del Centro",
+          event2_desc: "Reunión de planificación inicial para el nuevo proyecto de construcción de la plaza del centro.",
+          event2_date: "📅 20 de enero de 2025",
+          event2_time: "⏰ 2:00 PM",
+
+          event3_title: "Día de Mantenimiento de Equipos",
+          event3_desc: "Mantenimiento programado para toda la maquinaria pesada. Habrá equipos alternativos disponibles.",
+          event3_date: "📅 25 de enero de 2025",
+          event3_time: "⏰ Todo el día",
+
+          quickTitle: "Recursos de Acceso Rápido",
+          quickSub: "Todo lo que necesitas al alcance de tu mano",
+          submitTicket: "Enviar un Ticket",
+          viewPending: "Ver Tickets Pendientes",
+          history: "Historial de Tickets",
+
+          res_guides_title: "Guías",
+          res_guides_desc: "Guías paso a paso y documentación de mejores prácticas",
+          res_training_title: "Materiales de Capacitación",
+          res_training_desc: "Cursos de seguridad, certificaciones y recursos de aprendizaje",
+          res_feedback_title: "Retroalimentación",
+          res_feedback_desc: "Comparta sus pensamientos y sugerencias para mejorar",
+          res_policies_title: "Políticas y Formularios",
+          res_policies_desc: "Accede a las políticas de la empresa, procedimientos y formularios requeridos",
+          res_safety_title: "Recursos de Seguridad",
+          res_safety_desc: "Protocolos de seguridad, reporte de incidentes y guías",
+          res_directory_title: "Directorio del Equipo",
+          res_directory_desc: "Información de contacto y estructura organizativa",
+
+          miraTitle: "Mira — Agente de TI de Michels",
+          miraOpenLabel: "Abrir Mira — Agente de TI de Michels",
+
+          footer: "© 2025 Michels. Todos los derechos reservados."
+        },
+
+        de: {
+          pageTitle: "IT-Ressourcenzentrum",
+          navSearch: "Ressourcen suchen...",
+          notifHeader: "Benachrichtigungen",
+          notifClear: "Löschen",
+          notifViewAll: "Alle Updates anzeigen",
+          notif_item1_title: "Sicherheitsschulung",
+          notif_item1_desc: "Pflichtveranstaltung zur Sicherheit für alle Mitarbeiter am 15. Januar.",
+          notif_item1_time: "10. Jan",
+          notif_item2_title: "Gerätewartung",
+          notif_item2_desc: "Geplante Wartung am 25. Januar — bitte planen Sie entsprechend.",
+          notif_item2_time: "08. Jan",
+
+          profileEdit: "Profil bearbeiten",
+          profileTasks: "Meine Aufgaben",
+          profileSettings: "Einstellungen & Datenschutz",
+          profileFav: "Meine Favoriten",
+          profileLogout: "Abmelden",
+          langLabel: "Sprache",
+
+          sidebarTitle: "IT-Ressourcenzentrum",
+          sidebarHome: "Startseite",
+          sidebarAbout: "Über Michels",
+          sidebarProjects: "Projekte",
+          sidebarCareers: "Karriere",
+          sidebarContact: "Kontakt",
+          sidebarGuides: "Anleitungen",
+          sidebarTraining: "Schulungen",
+          sidebarPolicies: "Richtlinien & Formulare",
+          sidebarFeedback: "Feedback",
+          sidebarTools: "Werkzeuge & Ausrüstung",
+          sidebarDirectory: "Teamverzeichnis",
+          sidebarFooter: "© 2025 Michels",
+
+          heroTitle: "IT-Ressourcenzentrum",
+          heroDesc: "Ihr zentraler Hub für Unternehmensressourcen, Dokumente und wichtige Ankündigungen",
+
+          announceTitle: "Ankündigungen & Ereignisse",
+          announceSub: "Bleiben Sie über die neuesten Nachrichten und kommenden Ereignisse informiert",
+
+          event1_title: "Sicherheitsschulung - Alle Mitarbeiter erforderlich",
+          priorityBadge: "Priorität",
+          event1_desc: "Pflichtveranstaltung zur Sicherheit für alle Bau-Mitarbeiter. Themen umfassen Absturzsicherung und Gerätebedienung.",
+          event1_date: "📅 15. Januar 2025",
+          event1_time: "⏰ 9:00 Uhr",
+
+          event2_title: "Projekt-Kickoff-Meeting - Innenstadtplatz",
+          event2_desc: "Erstes Planungsmeeting für das neue Bauprojekt am Innenstadtplatz.",
+          event2_date: "📅 20. Januar 2025",
+          event2_time: "⏰ 14:00 Uhr",
+
+          event3_title: "Gerätewartungstag",
+          event3_desc: "Geplante Wartung für alle schweren Maschinen. Es stehen alternative Geräte zur Verfügung.",
+          event3_date: "📅 25. Januar 2025",
+          event3_time: "⏰ Ganzer Tag",
+
+          quickTitle: "Schnellzugriffsressourcen",
+          quickSub: "Alles was Sie brauchen, direkt zur Hand",
+          submitTicket: "Ticket einreichen",
+          viewPending: "Ausstehende Tickets anzeigen",
+          history: "Ticketverlauf",
+
+          res_guides_title: "Anleitungen",
+          res_guides_desc: "Schritt-für-Schritt-Anleitungen und Best-Practice-Dokumentation",
+          res_training_title: "Sch Schulungsmaterialien",
+          res_training_desc: "Sicherheitskurse, Zertifizierungen und Lernressourcen",
+          res_feedback_title: "Feedback",
+          res_feedback_desc: "Teilen Sie Ihre Gedanken und Verbesserungsvorschläge",
+          res_policies_title: "Richtlinien & Formulare",
+          res_policies_desc: "Zugriff auf Unternehmensrichtlinien, Verfahren und erforderliche Formulare",
+          res_safety_title: "Sicherheitsressourcen",
+          res_safety_desc: "Sicherheitsprotokolle, Vorfallmeldung und Richtlinien",
+          res_directory_title: "Teamverzeichnis",
+          res_directory_desc: "Kontaktinformationen und Organisationsstruktur",
+
+          miraTitle: "Mira — Michels IT-Agent",
+          miraOpenLabel: "Mira öffnen — Michels IT-Agent",
+
+          footer: "© 2025 Michels. Alle Rechte vorbehalten."
+        }
+      };
+
+      // Apply a language by iterating all elements with data-i18n
+      function applyLanguage(lang) {
+        const t = translations[lang] || translations['en'];
+
+        // update elements that use data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (!key) return;
+          const value = t[key];
+          if (value === undefined) return;
+
+          // if it's an input -> set placeholder, else set textContent
+          const tag = el.tagName.toLowerCase();
+          if (tag === 'input' || tag === 'textarea') {
+            el.placeholder = value;
+          } else {
+            el.textContent = value;
+          }
+        });
+
+        // update elements that have data-i18n-attr-label (aria labels)
+        document.querySelectorAll('[data-i18n-attr-label]').forEach(el => {
+          const key = el.getAttribute('data-i18n-attr-label');
+          if (!key) return;
+          const value = t[key];
+          if (value !== undefined) el.setAttribute('aria-label', value);
+        });
+
+        // Some attributes / placeholders not handled above:
+        const searchInput = document.getElementById('search');
+        if (searchInput && t['navSearch']) searchInput.placeholder = t['navSearch'];
+
+        // update page title
+        if (t['pageTitle']) document.title = t['pageTitle'];
       }
-      else if (query.includes("training")) {
-        window.location.href = "training.html";
+
+      // load saved language (or default to English)
+      const saved = localStorage.getItem('preferredLang') || 'en';
+      if (languageSelect) {
+        languageSelect.value = saved;
       }
-      else if (query.includes("policy") || query.includes("form")) {
-        window.location.href = "policies.html";
+      applyLanguage(saved);
+
+      // when user changes selection
+      if (languageSelect) {
+        languageSelect.addEventListener('change', () => {
+          const lang = languageSelect.value || 'en';
+          localStorage.setItem('preferredLang', lang);
+          applyLanguage(lang);
+        });
       }
-      else if (query.includes("safety")) {
-        window.location.href = "safety.html";
-      }
-      else if (query.includes("directory") || query.includes("team")) {
-        window.location.href = "directory.html";
-      }
-      else if (query.includes("feedback")) {
-        window.location.href = "feedback.html";
-      }
-      else {
-        alert("No results found. Try 'guides', 'policies', or 'resources'.");
-      }
-    }
-  });
-});
-</script>
+
+      // make sure any future changes to the page can be re-applied by calling applyLanguage
+      window.applyLanguage = applyLanguage;
+    })();
+  </script>
 
 </body>
 </html>

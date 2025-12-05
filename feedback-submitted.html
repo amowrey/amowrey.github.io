@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback Submitted</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .feedback-container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .feedback-question {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .thumbs {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .thumb-btn {
+      font-size: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+    .thumb-btn:hover {
+      transform: scale(1.2);
+    }
+    .submitted-message {
+      display: none;
+      margin-top: 22px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand, #b71c1c);
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="nav">
+  <div class="nav-left">
+    <button id="hamburger" class="icon-btn">☰</button>
+    <img src="https://www.thenewnorth.com/wp-content/uploads/2020/09/Michels-Logo_January_-2020-4x2-1.png" class="brand-logo">
+  </div>
+</header>
+
+<aside id="sidebar" class="sidebar" aria-hidden="true">
+  <div class="side-top">
+    <h3>IT Resource Center</h3>
+    <button id="closeSidebar" class="close-side">✕</button>
+  </div>
+  <nav class="side-nav">
+    <a href="index.html" class="side-link">Home</a>
+    <a href="feedback.html" class="side-link active">Feedback</a>
+  </nav>
+  <div class="side-foot">© 2025 Michels</div>
+</aside>
+
+<main class="content">
+  <div class="feedback-container">
+    <div class="feedback-question">Was this resource helpful?</div>
+
+    <div class="thumbs">
+      <button class="thumb-btn" id="thumbYes">👍</button>
+      <button class="thumb-btn" id="thumbNo">👎</button>
+    </div>
+
+    <p class="submitted-message" id="submittedMessage">
+      Thank you! Redirecting to IT Resource Center...
+    </p>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>© 2025 Michels. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+const submittedMessage = document.getElementById("submittedMessage");
+function handleFeedback() {
+  submittedMessage.style.display = "block";
+  setTimeout(() => { window.location.href = "index.html"; }, 5000);
+}
+document.getElementById("thumbYes").addEventListener("click", handleFeedback);
+document.getElementById("thumbNo").addEventListener("click", handleFeedback);
+</script>
+
+</body>
+</html>

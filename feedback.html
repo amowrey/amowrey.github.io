@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feedback</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    .feedback-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      animation: fadeIn .3s ease;
+    }
+    .feedback-container h2 {
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--brand, #b71c1c);
+    }
+    .feedback-container p {
+      margin-bottom: 20px;
+      color: #444;
+    }
+    .feedback-container label {
+      display: block;
+      font-weight: 600;
+      margin: 15px 0 6px;
+    }
+    .feedback-container input,
+    .feedback-container textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .feedback-container textarea {
+      resize: vertical;
+    }
+    .feedback-container button {
+      margin-top: 20px;
+      background: var(--brand, #b71c1c);
+      border: none;
+      padding: 12px 20px;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .feedback-container button:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="nav">
+  <div class="nav-left">
+    <button id="hamburger" class="icon-btn menu">☰</button>
+    <div class="brand">
+      <img src="https://www.thenewnorth.com/wp-content/uploads/2020/09/Michels-Logo_January_-2020-4x2-1.png" alt="Michels Logo" class="brand-logo" class="brand-logo" />
+    </div>
+  </div>
+
+  <div class="nav-center">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#8a8a8a" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      <input id="search" type="search" placeholder="Search resources..." />
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <div class="profile-dropdown-wrap">
+      <button id="profileBtn" class="icon-btn profile">
+        <img src="profile-icon.png" style="width:32px;height:32px;border-radius:50%;">
+      </button>
+      <div id="profileDropdown" class="profile-dropdown" aria-hidden="true">
+        <a href="#">Edit Profile</a>
+        <a href="#">My Task</a>
+        <a href="#">Settings & Privacy</a>
+        <a href="#" id="logout">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<aside id="sidebar" class="sidebar" aria-hidden="true">
+  <div class="side-top">
+    <h3>IT Resource Center</h3>
+    <button id="closeSidebar" class="close-side">✕</button>
+  </div>
+
+  <nav class="side-nav">
+    <a href="index.html" class="side-link">Home</a>
+    <a href="about.html" class="side-link">About Michels</a>
+    <a href="projects.html" class="side-link">Projects</a>
+    <a href="careers.html" class="side-link">Careers</a>
+    <a href="contact.html" class="side-link">Contact</a>
+    <hr />
+    <a href="guides.html" class="side-link">Guides</a>
+    <a href="training.html" class="side-link">Training</a>
+    <a href="policies.html" class="side-link">Policies & Forms</a>
+    <a href="feedback.html" class="side-link active">Feedback</a>
+    <a href="tools.html" class="side-link">Tools & Equipment</a>
+    <a href="directory.html" class="side-link">Team Directory</a>
+  </nav>
+
+  <div class="side-foot">© 2025 Michels</div>
+</aside>
+
+<main class="content">
+  <div class="feedback-container">
+    <h2>We Value Your Feedback</h2>
+    <p>Your input helps us improve resources, communication, and overall support.</p>
+
+    <form id="feedbackForm">
+      <label>Your Name (optional)</label>
+      <input id="fbName" type="text" placeholder="John Doe">
+
+      <label>Your Email (optional)</label>
+      <input id="fbEmail" type="email" placeholder="example@michels.com">
+
+      <label>Your Feedback</label>
+      <textarea id="fbMessage" rows="6" placeholder="Share your thoughts, suggestions, or concerns..."></textarea>
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <p>© 2025 Michels. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const msg = document.getElementById("fbMessage").value.trim();
+  if (!msg) { alert("Please enter feedback before submitting."); return; }
+  window.location.href = "feedback-submitted.html";
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safety Resources — Michels</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .safety-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px 50px;
+    }
+
+    /* HEADER BOX */
+    .safety-header-box {
+      background: var(--brand);
+      padding: 14px 14px;
+      text-align: center;
+      color: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+    .safety-header-box h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .safety-header-box p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    /* GRID */
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .safety-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      transition: 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .safety-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+    .safety-card h3 {
+      margin-bottom: 10px;
+      color: var(--brand);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .safety-card p {
+      flex-grow: 1;
+      margin-bottom: 16px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+    .safety-card a {
+      background: var(--brand);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .safety-card a:hover {
+      background: #8e1515;
+    }
+
+    /* BACK BUTTON */
+    .back-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 60px 0 40px;
+    }
+    .back-home {
+      display: inline-block;
+      background: #b71c1c;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 14px 34px;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 25px rgba(183, 28, 28, 0.35);
+      transition: all 0.25s ease;
+    }
+    .back-home:hover {
+      background: #9c1616;
+      box-shadow: 0 6px 30px rgba(183, 28, 28, 0.45);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER WITH LOGO -->
+<header class="nav">
+  <div class="nav-left">
+    <button id="hamburger" class="icon-btn menu">☰</button>
+
+    <div class="brand">
+      <a href="index.html">
+        <img 
+          src="https://www.thenewnorth.com/wp-content/uploads/2020/09/Michels-Logo_January_-2020-4x2-1.png"
+          class="brand-logo"
+          style="height:45px;width:auto;margin-left:10px;"
+        />
+      </a>
+    </div>
+  </div>
+
+  <div class="nav-center">
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Search resources..." />
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <button class="icon-btn bell">
+      <svg viewBox="0 0 24 24">
+        <path d="M15 17H9a3 3 0 006 0zM18 8a6 6 0 10-12 0v5l-2 2h16l-2-2V8z"
+         stroke="#222" stroke-width="1.2" fill="none" />
+      </svg>
+      <span class="notif">2</span>
+    </button>
+
+    <button class="icon-btn profile">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+        style="width:34px;height:34px;border-radius:50%;background:#f5f5f5;padding:4px;border:1px solid #ddd;">
+    </button>
+  </div>
+</header>
+
+
+<!-- SIDEBAR -->
+<aside id="sidebar" class="sidebar">
+  <div class="side-top">
+    <h3>Michels</h3>
+    <button id="closeSidebar" class="close-side">✕</button>
+  </div>
+
+  <nav class="side-nav">
+    <a href="index.html" class="side-link">Home</a>
+    <a href="guides.html" class="side-link">Guides</a>
+    <a href="training.html" class="side-link">Training</a>
+    <a href="policies.html" class="side-link">Policies & Forms</a>
+    <a href="safety.html" class="side-link active">Safety</a>
+    <a href="directory.html" class="side-link">Directory</a>
+  </nav>
+</aside>
+
+
+<!-- PAGE CONTENT -->
+<div class="safety-container">
+
+  <div class="safety-header-box">
+    <h1>Safety Resources</h1>
+    <p>Your most important safety tools — simple, clear, and ready when you need them.</p>
+  </div>
+
+  <div class="safety-grid">
+
+    <div class="safety-card">
+      <h3>Incident Reporting</h3>
+      <p>Submit and track workplace incidents quickly and responsibly.</p>
+      <a href="#">Open Tool</a>
+    </div>
+
+    <div class="safety-card">
+      <h3>Software Access & Accounts</h3>
+      <p>Learn how to request access to approved company software and systems.</p>
+      <a href="#">View Instructions</a>
+    </div>
+
+    <div class="safety-card">
+      <h3>Technology Use & Security Policy</h3>
+      <p>Understand expectations for responsible technology use, data protection, and password security.</p>
+      <a href="#">Read Policy</a>
+    </div>
+
+    <div class="safety-card">
+      <h3>Emergency Action Steps</h3>
+      <p>Clear steps to follow in fire, injury, weather, or chemical emergencies.</p>
+      <a href="#">View Action Steps</a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BACK BUTTON -->
+<div class="back-wrap">
+  <a href="index2.html" class="back-home">← Back to IT Resource Center</a>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+

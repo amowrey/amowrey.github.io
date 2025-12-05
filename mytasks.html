@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Tasks</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    .resource-card:hover, .event-card:hover {
+      box-shadow: 0 0 14px rgba(255, 0, 0, 0.55);
+      transform: translateY(-3px);
+      transition: 0.25s ease;
+    }
+
+    .search-bar { width: 100%; max-width: 500px; margin: 0 auto 30px; display: flex; }
+    .search-bar input {
+      flex: 1; padding: 12px 14px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;
+    }
+
+    .priority { display:inline-block; padding:3px 8px; border-radius:6px; font-size:.75rem; font-weight:600; margin-bottom:6px; }
+    .priority-high { background:#ffcccc; color:#a00000; }
+    .priority-med { background:#fff3c4; color:#a66c00; }
+    .priority-low { background:#d8f5d8; color:#1c6b1c; }
+
+    .progress-bar { width:100%; height:8px; background:#eee; border-radius:6px; margin-top:8px; overflow:hidden; }
+    .progress-fill { height:100%; background:var(--brand); width:0; }
+
+    .complete-btn {
+      background:var(--brand); color:white; border:none; padding:6px 10px;
+      border-radius:6px; cursor:pointer; font-size:.8rem; margin-top:8px;
+    }
+
+    /* ✅ MICHELS RED BACK BUTTON */
+    .back-btn {
+      display:inline-block;
+      background: #b71c1c;
+      color: #ffffff;
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0px 6px 22px rgba(183, 28, 28, 0.45);
+      transition: 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background: #9e1616;
+      box-shadow: 0px 8px 26px rgba(183, 28, 28, 0.55);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="nav">
+  <div class="nav-left">
+    <button id="hamburger" class="icon-btn menu" title="Open menu">☰</button>
+    <div class="brand">
+      <img src="https://www.thenewnorth.com/wp-content/uploads/2020/09/Michels-Logo_January_-2020-4x2-1.png" alt="Michels Logo" class="brand-logo"/>
+    </div>
+  </div>
+
+  <div class="nav-center">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35" stroke="#8a8a8a" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      <input id="search" type="search" placeholder="Search resources..." aria-label="Search resources"/>
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <div class="notif-wrap">
+      <button class="icon-btn bell" id="notifBtn" title="Notifications">
+        <svg viewBox="0 0 24 24"><path d="M15 17H9a3 3 0 006 0zM18 8a6 6 0 10-12 0v5l-2 2h16l-2-2V8z" stroke="#222" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="notif">2</span>
+      </button>
+      <div id="notifDropdown" class="notif-dropdown" aria-hidden="true"></div>
+    </div>
+
+    <div class="profile-dropdown-wrap" id="profileWrap">
+      <button class="icon-btn profile" id="profileBtn" title="Profile">
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" style="width:30px;height:30px;border:0.5px solid #ffffff;background:#ffffff;padding:4px;">
+      </button>
+
+      <div id="profileDropdown" class="profile-dropdown" aria-hidden="true">
+        <a href="#">Edit Profile</a>
+        <a href="mytasks.html">My Task</a>
+        <a href="#">Settings & Privacy</a>
+        <a href="#" id="changeLanguage">Language</a>
+        <a href="#" id="logout">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<aside id="sidebar" class="sidebar" aria-hidden="true">
+  <div class="side-top">
+    <h3>IT Resource Center</h3>
+    <button id="closeSidebar" class="close-side" title="Close">✕</button>
+  </div>
+
+  <nav class="side-nav">
+    <a href="index.html" class="side-link">Home</a>
+    <a href="about.html" class="side-link">About Michels</a>
+    <a href="projects.html" class="side-link">Projects</a>
+    <a href="careers.html" class="side-link">Careers</a>
+    <a href="contact.html" class="side-link">Contact</a>
+    <hr/>
+    <a href="guides.html" class="side-link">Guides</a>
+    <a href="training.html" class="side-link">Training</a>
+    <a href="policies.html" class="side-link">Policies & Forms</a>
+    <a href="feedback.html" class="side-link">Feedback</a>
+    <a href="tools.html" class="side-link">Tools & Equipment</a>
+    <a href="directory.html" class="side-link">Team Directory</a>
+  </nav>
+</aside>
+
+<div class="hero" style="height:260px;">
+  <div class="hero-overlay">
+    <h1 class="hero-title">My Task Progress</h1>
+    <p class="hero-sub">Tracking job progress across all work sites</p>
+  </div>
+</div>
+
+<div class="back-btn-wrap" style="text-align:left; margin:30px 0 0 60px;">
+  <a href="index2.html" class="back-btn">← Back to IT Resource Center</a>
+</div>
+
+<main class="content">
+
+  <h2 class="section-title">Overview</h2>
+
+  <div class="search-bar">
+    <input id="taskSearch" type="text" placeholder="Search tasks...">
+  </div>
+
+  <p class="section-sub">Here is the status of your assigned work</p>
+
+  <div style="display:flex; gap:20px; justify-content:center; margin-bottom:40px; flex-wrap:wrap;">
+    <div class="resource-card" style="width:260px;"><h4>Completed</h4><p>12 Tasks</p></div>
+    <div class="resource-card" style="width:260px;"><h4>In Progress</h4><p>7 Tasks</p></div>
+    <div class="resource-card" style="width:260px;"><h4>Not Started</h4><p>4 Tasks</p></div>
+  </div>
+
+  <h2 class="section-title">Task Breakdown</h2>
+
+  <!-- ✅ NEW TASKS INSERTED BELOW -->
+  <div id="taskGrid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px;">
+
+    <!-- IN PROGRESS -->
+    <div class="event-card">
+      <h3>In Progress</h3>
+
+      <div class="ticket-item" data-task>
+        <span class="priority priority-high">High Priority</span>
+        <h4>Renew Annual Benefits</h4>
+        <p>HR Portal • Due Friday</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+        <button class="complete-btn" onclick="markComplete(this)">Mark Complete</button>
+      </div>
+
+      <div class="ticket-item" data-task>
+        <span class="priority priority-med">Medium Priority</span>
+        <h4>Security Awareness Training</h4>
+        <p>Online Training • 45% Complete</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+        <button class="complete-btn" onclick="markComplete(this)">Mark Complete</button>
+      </div>
+
+    </div>
+
+    <!-- COMPLETED -->
+    <div class="event-card" id="completedCol">
+      <h3>Completed</h3>
+
+      <div class="ticket-item" data-task>
+        <span class="priority priority-low">Low Priority</span>
+        <h4>Timecard Submitted</h4>
+        <p>Payroll Confirmed Yesterday</p>
+      </div>
+
+      <div class="ticket-item" data-task>
+        <span class="priority priority-low">Low Priority</span>
+        <h4>Emergency Contact Updated</h4>
+        <p>HR Records Verified</p>
+      </div>
+
+    </div>
+
+    <!-- NOT STARTED -->
+    <div class="event-card">
+      <h3>Not Started</h3>
+
+      <div class="ticket-item" data-task>
+        <span class="priority priority-med">Medium Priority</span>
+        <h4>VPN Access Request</h4>
+        <p>Pending IT Admin Approval</p>
+      </div>
+
+      <div class="ticket-item" data-task>
+        <span class="priority priority-low">Low Priority</span>
+        <h4>New Laptop Setup</h4>
+        <p>Pick-up Scheduled Next Week</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<div class="footer">© 2025 Michels</div>
+
+<script>
+document.getElementById('taskSearch').addEventListener('input', function() {
+  const value = this.value.toLowerCase();
+  document.querySelectorAll('[data-task]').forEach(task => {
+    task.style.display = task.textContent.toLowerCase().includes(value) ? '' : 'none';
+  });
+});
+
+function markComplete(button) {
+  const task = button.closest('.ticket-item');
+  button.remove();
+  task.querySelector('.progress-bar')?.remove();
+  document.getElementById('completedCol').appendChild(task);
+}
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
